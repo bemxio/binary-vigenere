@@ -1,5 +1,8 @@
 #include "bingenere.h"
 
+#include <stddef.h>
+#include <malloc.h>
+
 size_t _get_data_length(uint8_t* data) {
     size_t length = 0;
 
