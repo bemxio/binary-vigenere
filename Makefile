@@ -1,11 +1,19 @@
 CC = gcc
-SOURCES = $(basename $(wildcard examples/*.c))
+CFLAGS = -Wall
 
-.PHONY: examples tests
+SRC_DIR = src
+BUILD_DIR = build
 
-tests:
-	$(CC) -o tests/main tests/main.c src/bingenere.c tests/unity/src/unity.c
-	./tests/main
+tests: $(SRC_DIR)/tests/main.c $(SRC_DIR)/tests/Unity/src/unity.c $(SRC_DIR)/bingenere/bingenere.c | $(BUILD_DIR)
+	$(CC) $(CFLAGS) $^ -o $(BUILD_DIR)/tests && $(BUILD_DIR)/tests
 
-examples:
-	$(foreach file,$(SOURCES),$(CC) -o $(file) $(file).c src/bingenere.c;)
+examples: $(patsubst $(SRC_DIR)/examples/%.c,$(BUILD_DIR)/%,$(wildcard $(SRC_DIR)/examples/*.c)) | $(BUILD_DIR)
+
+clean:
+	rm -rf $(BUILD_DIR)
+
+$(BUILD_DIR)/%: $(SRC_DIR)/examples/%.c $(SRC_DIR)/bingenere/bingenere.c | $(BUILD_DIR)
+	$(CC) $(CFLAGS) $^ -o $@
+
+$(BUILD_DIR):
+	mkdir -p $(BUILD_DIR)
