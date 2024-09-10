@@ -1,4 +1,4 @@
-# binary-vigenere
+# bigenere
 A simple C library for encrypting and decrypting data in a custom [Vigenère cipher](https://en.wikipedia.org/wiki/Vigen%C3%A8re_cipher), suited for raw bytes.
 
 ## Building
